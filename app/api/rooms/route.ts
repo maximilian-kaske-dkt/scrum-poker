@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
   const roomId = crypto.randomUUID();
 
   await redis.hset(`rooms:${roomId}:votes`, { [userId]: null });
-  await redis.set(`rooms:${roomId}:status`, "hidden");
+  await redis.set(`rooms:${roomId}:status`, "hide");
 
   return Response.json({ uuid: roomId });
 }
