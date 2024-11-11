@@ -5,11 +5,14 @@ export function middleware(request: NextRequest) {
   const cookie = request.cookies.get("uuid");
   const response = NextResponse.next();
 
+  // console.log({ cookie });
+
   if (cookie) return response;
 
   // https://nextjs.org/docs/app/api-reference/edge#crypto-apis
   const uuid = crypto.randomUUID();
-  response.cookies.set("uuid", uuid);
+  // TODO: update httpOnly, expires,...
+  response.cookies.set("uuid", uuid, { httpOnly: true, secure: true });
 
   return response;
 }
