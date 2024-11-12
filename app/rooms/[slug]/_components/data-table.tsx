@@ -8,6 +8,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { RoomType } from "@/lib/schema";
+import Image from "next/image";
 
 export function DataTable({ room }: { room: RoomType }) {
   return (
@@ -25,7 +26,15 @@ export function DataTable({ room }: { room: RoomType }) {
             .sort()
             .map((key) => (
               <TableRow key={key}>
-                <TableCell className="font-medium font-mono">{key}</TableCell>
+                <TableCell className="font-medium font-mono flex items-center gap-2">
+                  <Image
+                    src={`https://api.dicebear.com/9.x/avataaars/svg?seed=${key}`}
+                    alt={key}
+                    width={20}
+                    height={20}
+                  />
+                  {key}
+                </TableCell>
                 <TableCell className="text-right font-mono">
                   {room[key] || "-"}
                 </TableCell>
