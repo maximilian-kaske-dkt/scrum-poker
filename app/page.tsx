@@ -1,13 +1,14 @@
-"use client";
+import { Redis } from "@upstash/redis";
+import { CreateButton } from "./_components/create-button";
 
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
-import { createAction } from "./_components/actions";
+const redis = Redis.fromEnv();
 
-export default function Home() {
-  const router = useRouter();
+export const revalidate = 600;
+
+export default async function Home() {
+  const number = await redis.get<number>(`rooms`);
   return (
-    <div className="container mx-auto min-h-screen">
+    <div className="container mx-auto min-h-screen flex flex-col items-center justify-center gap-3">
       <h1 className="font-bold text-3xl">
         Scrum Poker <span className="text-[#3643ba] font-bold">DKT</span>
       </h1>
@@ -15,15 +16,12 @@ export default function Home() {
         A simple Next.js example for the Decathlon Team!
       </p>
       <div>
-        <Button
-          onClick={async () => {
-            const roomId = await createAction();
-            router.push(`/rooms/${roomId}`);
-          }}
-        >
-          Create a Room
-        </Button>
+        <CreateButton />
       </div>
+      <p className="text-muted-foreground text-sm">
+        <span className="text-foreground font-mono">{number}</span> rooms
+        created
+      </p>
     </div>
   );
 }

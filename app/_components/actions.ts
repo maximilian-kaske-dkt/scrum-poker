@@ -2,8 +2,10 @@
 
 import { Redis } from "@upstash/redis";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 const redis = Redis.fromEnv();
+const p = redis.pipeline();
 
 export async function createAction() {
   const userId = (await cookies()).get("uuid")?.value;
@@ -12,8 +14,13 @@ export async function createAction() {
 
   const roomId = crypto.randomUUID();
 
-  await redis.hset(`rooms:${roomId}:votes`, { [userId]: null });
-  await redis.set(`rooms:${roomId}:status`, "hide");
+  p.hset(`rooms:${roomId}:votes`, { [userId]: null });
+  p.set(`rooms:${roomId}:status`, "hide");
+  p.incr(`rooms`);
 
-  return roomId;
+  await p.exec();
+
+  redirect(`/rooms/${roomId}`);
+
+  return;
 }
