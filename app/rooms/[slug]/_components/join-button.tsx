@@ -22,7 +22,7 @@ export function JoinButton({
   return (
     <form action={submit}>
       <input type="hidden" name="roomId" value={roomId} />
-      <Button>Subscribe to Room</Button>
+      <Button>Join room</Button>
     </form>
   );
 }

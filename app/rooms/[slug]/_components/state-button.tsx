@@ -11,7 +11,7 @@ export function StateButton({ status }: { status: StatusType }) {
   return (
     <div className="flex items-center gap-4">
       <Button
-        variant="ghost"
+        variant="outline"
         className="flex-1"
         onClick={async () => {
           await fetch(`/api/rooms/${params.slug}/status`, {
@@ -24,7 +24,7 @@ export function StateButton({ status }: { status: StatusType }) {
         {status === "open" ? "Hide" : "Open"}
       </Button>
       <Button
-        variant="ghost"
+        variant="outline"
         className="flex-1"
         onClick={async () => {
           await fetch(`/api/rooms/${params.slug}/status`, {

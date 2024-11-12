@@ -9,7 +9,10 @@ export function PollResult() {
   const router = useRouter();
 
   useEffect(() => {
-    const interval = setInterval(router.refresh, POLLING_INTERVAL);
+    const interval = setInterval(() => {
+      console.log("POLLING");
+      router.refresh();
+    }, POLLING_INTERVAL);
     return () => clearInterval(interval);
   }, [router]);
 

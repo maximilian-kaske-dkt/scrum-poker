@@ -7,6 +7,7 @@ import { BASE_URL } from "@/lib/constants";
 import { VoteButton } from "./_components/vote-button";
 import { StateButton } from "./_components/state-button";
 import { PollResult } from "./_components/poll-result";
+import { Separator } from "@/components/ui/separator";
 
 export default async function RoomPage({
   params,
@@ -51,9 +52,14 @@ export default async function RoomPage({
   }
 
   return (
-    <div className="grid gap-4">
+    <div className="grid gap-8">
       <VoteButton defaultValue={room.data[uuid] || null} />
+      <Separator />
       <DataTable room={room.data} />
+      <Separator />
+      <p className="text-center">
+        Current state is <span className="font-mono">'{status.data}'</span>
+      </p>
       <StateButton status={status.data} />
       {/* <PollResult /> */}
     </div>
