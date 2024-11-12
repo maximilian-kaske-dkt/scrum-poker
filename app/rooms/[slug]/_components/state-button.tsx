@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { StatusType } from "@/lib/schema";
 import { useParams, useRouter } from "next/navigation";
+import { statusAction } from "./actions";
 
 export function StateButton({ status }: { status: StatusType }) {
   const params = useParams<{ slug: string }>();
@@ -14,9 +15,9 @@ export function StateButton({ status }: { status: StatusType }) {
         variant="outline"
         className="flex-1"
         onClick={async () => {
-          await fetch(`/api/rooms/${params.slug}/status`, {
-            method: "PUT",
-            body: JSON.stringify(status === "open" ? "hide" : "open"),
+          await statusAction({
+            roomId: params.slug,
+            status: status === "open" ? "hide" : "open",
           });
           router.refresh();
         }}
@@ -27,10 +28,7 @@ export function StateButton({ status }: { status: StatusType }) {
         variant="outline"
         className="flex-1"
         onClick={async () => {
-          await fetch(`/api/rooms/${params.slug}/status`, {
-            method: "PUT",
-            body: JSON.stringify("reset"),
-          });
+          await statusAction({ roomId: params.slug, status: "reset" });
           router.refresh();
         }}
       >

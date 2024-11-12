@@ -8,6 +8,9 @@ import { VoteButton } from "./_components/vote-button";
 import { StateButton } from "./_components/state-button";
 import { PollResult } from "./_components/poll-result";
 import { Separator } from "@/components/ui/separator";
+import { Redis } from "@upstash/redis";
+
+const redis = Redis.fromEnv();
 
 export default async function RoomPage({
   params,
@@ -19,14 +22,8 @@ export default async function RoomPage({
   const slug = (await params).slug;
   const uuid = cookieStore.get("uuid")?.value;
 
-  // REMINDER: server-side (nodejs) fetch doesn't include cookies automatically!
-  // REMINDER: url requires to be absolute as server doesn't know about host
-  // REMINDER: or just query redis.hgetall() to access the data
-  const res1 = await fetch(`${BASE_URL}/api/rooms/${slug}`, {
-    headers: { Cookie: cookieStore.toString() },
-  });
-  const json1 = await res1.json();
-  const room = roomSchema.safeParse(json1);
+  const roomData = await redis.hgetall(`rooms:${slug}:votes`);
+  const room = roomSchema.safeParse(roomData);
 
   if (!room.success || !uuid) return notFound();
 
@@ -36,9 +33,8 @@ export default async function RoomPage({
     return <JoinButton roomId={slug} userId={uuid} />;
   }
 
-  const res2 = await fetch(`${BASE_URL}/api/rooms/${slug}/status`);
-  const json2 = await res2.json();
-  const status = statusSchema.safeParse(json2);
+  const statusData = await redis.get(`rooms:${slug}:status`);
+  const status = statusSchema.safeParse(statusData);
 
   if (!status.success) return notFound();
 

@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { RoomType } from "@/lib/schema";
 import { useParams, useRouter } from "next/navigation";
+import { voteAction } from "./actions";
 
 const votes = [1, 2, 3, 4, 5];
 
@@ -23,11 +24,9 @@ export function VoteButton({
           variant={defaultValue === value ? "default" : "outline"}
           className="font-mono flex-1 font-bold"
           onClick={async () => {
-            await fetch(`/api/rooms/${params.slug}`, {
-              method: "PUT",
-              body: JSON.stringify(value),
-            });
+            await voteAction({ roomId: params.slug, value });
             router.refresh();
+            // TODO: revalidatePath()
           }}
         >
           {value}
