@@ -1,8 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { BASE_URL } from "@/lib/constants";
+import { Redis } from "@upstash/redis";
 import { redirect } from "next/navigation";
 
-export function Subscribe({
+const redis = Redis.fromEnv();
+
+export function JoinButton({
   roomId,
   userId,
 }: {
@@ -12,14 +15,7 @@ export function Subscribe({
   async function submit(formData: FormData) {
     "use server";
     const roomId = formData.get("roomId") as string;
-    // REMINDER: use redis.hset or fetch
-    await fetch(`${BASE_URL}/api/rooms/${roomId}`, {
-      method: "PUT",
-      headers: {
-        cookie: `uuid=${userId}`,
-      },
-      body: JSON.stringify(null),
-    });
+    await redis.hset(`rooms:${roomId}:votes`, { [userId]: null });
     redirect(`/rooms/${roomId}`);
   }
 

@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { DataTable } from "./_components/data-table";
 import { roomSchema, statusSchema } from "@/lib/schema";
 import { notFound } from "next/navigation";
-import { Subscribe } from "./_components/subscribe";
+import { JoinButton } from "./_components/join-button";
 import { BASE_URL } from "@/lib/constants";
 import { VoteButton } from "./_components/vote-button";
 import { StateButton } from "./_components/state-button";
@@ -32,7 +32,7 @@ export default async function RoomPage({
   console.log(room.data, uuid);
 
   if (!uuid || room.data?.[uuid] === undefined) {
-    return <Subscribe roomId={slug} userId={uuid} />;
+    return <JoinButton roomId={slug} userId={uuid} />;
   }
 
   const res2 = await fetch(`${BASE_URL}/api/rooms/${slug}/status`);
