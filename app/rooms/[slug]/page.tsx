@@ -58,7 +58,8 @@ export default async function RoomPage({
       <DataTable room={room.data} />
       <Separator />
       <p className="text-center">
-        Current state is <span className="font-mono">'{status.data}'</span>
+        Current state is{" "}
+        <span className="font-mono">&apos;{status.data}&apos;</span>
       </p>
       <StateButton status={status.data} />
       {/* <PollResult /> */}
