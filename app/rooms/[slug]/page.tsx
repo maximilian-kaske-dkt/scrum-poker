@@ -3,8 +3,8 @@ import { DataTable } from "./_components/data-table";
 import { roomSchema, statusSchema } from "@/lib/schema";
 import { notFound } from "next/navigation";
 import { JoinButton } from "./_components/join-button";
-import { VoteButton } from "./_components/vote-button";
-import { StateButton } from "./_components/state-button";
+import { VoteButtons } from "./_components/vote-buttons";
+import { ActionButtons } from "./_components/action-buttons";
 import { PollResult } from "./_components/poll-result";
 import { Separator } from "@/components/ui/separator";
 import { Redis } from "@upstash/redis";
@@ -52,7 +52,7 @@ export default async function RoomPage({
 
   return (
     <div className="grid gap-8">
-      <VoteButton defaultValue={room.data[uuid] || null} />
+      <VoteButtons defaultValue={room.data[uuid] || null} />
       <Separator />
       <DataTable room={room.data} />
       <Separator />
@@ -60,7 +60,7 @@ export default async function RoomPage({
         Current state is{" "}
         <span className="font-mono">&apos;{status.data}&apos;</span>
       </p>
-      <StateButton status={status.data} />
+      <ActionButtons status={status.data} />
       {/* <PollResult /> */}
     </div>
   );

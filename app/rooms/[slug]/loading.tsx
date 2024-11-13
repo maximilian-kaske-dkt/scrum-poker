@@ -54,6 +54,7 @@ export default function Loading() {
       <div className="flex items-center gap-4">
         <Skeleton className="h-10 flex-1" />
         <Skeleton className="h-10 flex-1" />
+        <Skeleton className="h-10 flex-1" />
       </div>
     </div>
   );

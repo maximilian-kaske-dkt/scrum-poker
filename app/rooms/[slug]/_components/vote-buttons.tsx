@@ -7,7 +7,7 @@ import { voteAction } from "./actions";
 
 const votes = [1, 2, 3, 4, 5];
 
-export function VoteButton({
+export function VoteButtons({
   defaultValue,
 }: {
   defaultValue: RoomType[keyof RoomType]; // number | null

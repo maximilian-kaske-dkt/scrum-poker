@@ -4,13 +4,15 @@ import { Button } from "@/components/ui/button";
 import { StatusType } from "@/lib/schema";
 import { useParams, useRouter } from "next/navigation";
 import { statusAction } from "./actions";
+import { useToast } from "@/hooks/use-toast";
 
-export function StateButton({ status }: { status: StatusType }) {
+export function ActionButtons({ status }: { status: StatusType }) {
   const params = useParams<{ slug: string }>();
   const router = useRouter();
+  const { toast } = useToast();
 
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex flex-wrap items-center gap-4">
       <Button
         variant="outline"
         className="flex-1"
@@ -33,6 +35,20 @@ export function StateButton({ status }: { status: StatusType }) {
         }}
       >
         Reset
+      </Button>
+      <Button
+        variant="outline"
+        className="flex-1"
+        onClick={() => {
+          const href = window.location.href;
+          navigator.clipboard.writeText(href);
+          toast({
+            title: "Copied URL!",
+            description: "Share it with your team mates",
+          });
+        }}
+      >
+        Copy URL to clipboard
       </Button>
     </div>
   );
