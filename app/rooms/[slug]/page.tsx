@@ -61,7 +61,7 @@ export default async function RoomPage({
         <span className="font-mono">&apos;{status.data}&apos;</span>
       </p>
       <ActionButtons status={status.data} />
-      {/* <PollResult /> */}
+      <PollResult />
     </div>
   );
 }
