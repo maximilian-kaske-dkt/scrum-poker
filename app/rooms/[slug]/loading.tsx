@@ -34,8 +34,8 @@ export default function Loading() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {new Array(ROWS).fill(undefined).map((key) => (
-            <TableRow key={key}>
+          {new Array(ROWS).fill(undefined).map((_, i) => (
+            <TableRow key={i}>
               <TableCell className="flex items-center gap-2">
                 <Skeleton className="h-5 w-5" />
                 <Skeleton className="h-5 w-64" />

@@ -29,7 +29,11 @@ export default async function RoomPage({
   console.log(room.data, uuid);
 
   if (!uuid || room.data?.[uuid] === undefined) {
-    return <JoinButton roomId={slug} userId={uuid} />;
+    return (
+      <div className="flex items-center justify-center">
+        <JoinButton roomId={slug} userId={uuid} />
+      </div>
+    );
   }
 
   const statusData = await redis.get(`rooms:${slug}:status`);

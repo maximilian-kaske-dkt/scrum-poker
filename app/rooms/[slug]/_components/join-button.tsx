@@ -21,7 +21,7 @@ export function JoinButton({
   return (
     <form action={submit}>
       <input type="hidden" name="roomId" value={roomId} />
-      <Button>Join room</Button>
+      <Button size="lg">Join room</Button>
     </form>
   );
 }
