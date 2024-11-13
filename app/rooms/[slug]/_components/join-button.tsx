@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { BASE_URL } from "@/lib/constants";
 import { Redis } from "@upstash/redis";
 import { redirect } from "next/navigation";
 

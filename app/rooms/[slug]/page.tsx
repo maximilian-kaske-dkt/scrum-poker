@@ -3,7 +3,6 @@ import { DataTable } from "./_components/data-table";
 import { roomSchema, statusSchema } from "@/lib/schema";
 import { notFound } from "next/navigation";
 import { JoinButton } from "./_components/join-button";
-import { BASE_URL } from "@/lib/constants";
 import { VoteButton } from "./_components/vote-button";
 import { StateButton } from "./_components/state-button";
 import { PollResult } from "./_components/poll-result";
